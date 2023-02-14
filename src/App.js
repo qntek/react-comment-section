@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+
+import data from './data';
+import Comment from './components/Comment';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [postComments, setData] = useState(data.comments);
+	// const userDetails = data.currentUser;
+	
+	const handleScoreChange = (id, sign) => {
+		let incrementDirection
+		sign === '+' ? incrementDirection = 1 : incrementDirection = -1;
+		const result = postComments.map((comment) => {
+			if (comment.id === id) {
+				return { ...comment, score: comment.score + (1 * incrementDirection) };
+			} else return comment;
+		});
+		setData(result);
+	};
+
+
+	const methods = { handleScoreChange };
+
+	const comments = postComments.map((comment) => {
+		return <Comment key={comment.id} comment={comment} methods={methods} />;
+	});
+
+	return <div>{comments}</div>;
 }
 
 export default App;

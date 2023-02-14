@@ -1,0 +1,51 @@
+@import 'reset';
+
+// container
+.container-md {
+    width: 100%;
+    max-width: 576px;
+    margin: 0 auto;
+    font-family: 'Rubik', sans-serif;
+}
+// score counter
+
+.score_counter-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f6fa;
+    border-radius: 6px;
+}
+.score_counter-container-horizontal {
+  min-width: 70px;
+  padding: 4px 6px;
+  .score_counter-score {
+    margin: 3px 4px;
+}
+}
+.score_counter-container-vertical {
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px 4px;
+}
+.score_counter-button {
+    display: flex;
+    padding: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.score_counter-img {
+    width: 8px;
+    transition: 300 all;
+    color: red;
+}
+.score_counter-img:hover {
+    color: #4a479e;
+}
+.score_counter-score {
+    margin: 3px 0px;
+    color: #4b50a4;
+    font-size: 12px;
+    font-weight: 500;
+}
