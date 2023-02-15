@@ -1,19 +1,16 @@
-import MediaQuery from 'react-responsive';
-import { useMediaQuery } from 'react-responsive';
-
 import ScoreCounter from './ScoreCounter';
+import CommentDetails from './CommentDetails';
 
 function Comment({ comment, methods }) {
-
 	return (
-		<div>
-		<ScoreCounter id={comment.id} score={comment.score} orientation={'vertical'} methods={methods}/>
-			{/* <MediaQuery minWidth={576}>
-				<p>You are a desktop or laptop</p>
-				<MediaQuery minWidth={1200}>
-					<p>You also have a huge screen</p>
-				</MediaQuery>
-			</MediaQuery> */}
+		<div className='comment-container'>
+			<div>
+				<ScoreCounter id={comment.id} score={comment.score} methods={methods} />
+			</div>
+			<div className='comment-content'>
+				<CommentDetails comment={comment} />
+				<p className='comment-content-text'>{comment.content}</p>
+			</div>
 		</div>
 	);
 }

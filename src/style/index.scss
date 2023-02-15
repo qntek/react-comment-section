@@ -1,51 +1,87 @@
 @import 'reset';
 
+body {
+	background-color: #f5f6fa;
+}
 // container
 .container-md {
+	width: 100%;
+	max-width: 576px;
+	margin: 0 auto;
+	font-family: 'Rubik', sans-serif;
+}
+// comment
+.comment-container {
+	display: flex;
     width: 100%;
-    max-width: 576px;
-    margin: 0 auto;
-    font-family: 'Rubik', sans-serif;
+    margin: 8px 0;
+    padding: 15px;
+	background-color: #fff;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.comment-content-text {
+    margin-top: 12px;
+    color: hsl(211, 10%, 45%);
+}
+
+// comment details
+.comment-detail-container {
+	display: flex;
+	align-items: center;
+}
+.comment-detail-img {
+	width: 25px;
+}
+.comment-detail-name {
+	margin-left: 15px;
+	font-weight: 500;
+}
+.comment-detail-time {
+	margin-left: 12px;
+	color: hsl(211, 10%, 45%);
+	font-weight: 400;
 }
 // score counter
 
 .score_counter-container {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f6fa;
-    border-radius: 6px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+    margin-right: 12px;
+	background-color: #f5f6fa;
+	border-radius: 6px;
 }
 .score_counter-container-horizontal {
-  min-width: 70px;
-  padding: 4px 6px;
-  .score_counter-score {
-    margin: 3px 4px;
-}
+	min-width: 70px;
+	padding: 4px 6px;
+	.score_counter-score {
+		margin: 3px 4px;
+	}
 }
 .score_counter-container-vertical {
-    flex-direction: column;
-    justify-content: center;
-    padding: 5px 4px;
+	flex-direction: column;
+	justify-content: center;
+	padding: 5px 4px;
 }
 .score_counter-button {
-    display: flex;
-    padding: 5px;
-    border: none;
-    background: none;
-    cursor: pointer;
+	display: flex;
+	padding: 5px;
+	border: none;
+	background: none;
+	cursor: pointer;
 }
 .score_counter-img {
-    width: 8px;
-    transition: 300 all;
-    color: red;
+	width: 8px;
+	transition: 300 all;
+	color: red;
 }
 .score_counter-img:hover {
-    color: #4a479e;
+	color: #4a479e;
 }
 .score_counter-score {
-    margin: 3px 0px;
-    color: #4b50a4;
-    font-size: 12px;
-    font-weight: 500;
+	margin: 3px 0px;
+	color: #4b50a4;
+	font-size: 12px;
+	font-weight: 500;
 }
