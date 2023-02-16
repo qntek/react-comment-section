@@ -12,7 +12,7 @@ function App() {
 		sign === '+' ? (incrementDirection = 1) : (incrementDirection = -1);
 		const result = postComments.map((comment) => {
 			if (comment.id === id) {
-				return { ...comment, score: comment.score + 1 * incrementDirection };
+				return { ...comment, score: comment.score + (1 * incrementDirection) };
 			} else return comment;
 		});
 		console.log(result);
