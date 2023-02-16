@@ -23,7 +23,18 @@ function App() {
 				return { ...comment, replies: updatedReplies };
 			} else return comment;
 		});
-		setData(result);
+
+		setData(sortReplies(result));
+	};
+
+	const sortReplies = (postComments) => {
+		const result = postComments.map((comment) => {
+			const sortedReplies = comment.replies.sort((a, b) => {
+				return b.score - a.score;
+			});
+			return { ...comment, replies: sortedReplies };
+		});
+		return result;
 	};
 
 	const methods = { handleScoreChange };
