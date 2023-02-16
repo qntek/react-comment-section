@@ -12,10 +12,17 @@ function App() {
 		sign === '+' ? (incrementDirection = 1) : (incrementDirection = -1);
 		const result = postComments.map((comment) => {
 			if (comment.id === id) {
-				return { ...comment, score: comment.score + (1 * incrementDirection) };
+				return { ...comment, score: comment.score + 1 * incrementDirection };
+			} else if (comment.replies.length) {
+				//dive deeper into replies section
+				const updatedReplies = comment.replies.map((reply) => {
+					if (reply.id === id) {
+						return { ...reply, score: reply.score + 1 * incrementDirection };
+					} else return { ...reply };
+				});
+				return { ...comment, replies: updatedReplies };
 			} else return comment;
 		});
-		console.log(result);
 		setData(result);
 	};
 
