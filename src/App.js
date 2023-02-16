@@ -24,18 +24,22 @@ function App() {
 			} else return comment;
 		});
 
-		setData(sortReplies(result));
+		setData(sortComments(result));
 	};
-
-	const sortReplies = (postComments) => {
-		const result = postComments.map((comment) => {
-			const sortedReplies = comment.replies.sort((a, b) => {
-				return b.score - a.score;
-			});
-			return { ...comment, replies: sortedReplies };
-		});
+	const sortComments = (postComments) => {
+		const result = postComments.sort((a, b) => b.score - a.score);
 		return result;
-	};
+	}
+
+	// const sortReplies = (postComments) => {
+	// 	const result = postComments.map((comment) => {
+	// 		const sortedReplies = comment.replies.sort((a, b) => {
+	// 			return b.score - a.score;
+	// 		});
+	// 		return { ...comment, replies: sortedReplies };
+	// 	});
+	// 	return result;
+	// };
 
 	const methods = { handleScoreChange };
 
