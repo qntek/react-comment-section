@@ -10,7 +10,8 @@ function ScoreCounter({ id, score, methods }) {
 
 	const handleScoreChange = (id, sign) => {
 		if (score === 0 && sign === '-') return;
-		methods.handleScoreChange(id, sign);
+		else if (score === 999 && sign === '+') return;
+		else methods.handleScoreChange(id, sign);
 	};
 
 	return (

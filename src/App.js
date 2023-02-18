@@ -1,11 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import data from './data';
 import Comment from './components/Comment';
 
 function App() {
 	const [postComments, setData] = useState(data.comments);
-	// const userDetails = data.currentUser;
+	const userDetails = data.currentUser;
+
+	useEffect(() => {
+		const addAnswerWindow = postComments.map((comment) => {
+			const replies = comment.replies.map((reply) => {
+				if (!reply) return;
+				return { ...reply, addAnswer: false };
+			});
+			return { ...comment, replies, addAnswer: false };
+		});
+		setData(addAnswerWindow);
+	}, []);
 
 	const handleScoreChange = (id, sign) => {
 		let incrementDirection;
@@ -23,28 +34,43 @@ function App() {
 				return { ...comment, replies: updatedReplies };
 			} else return comment;
 		});
-
 		setData(sortComments(result));
 	};
+
+	const showReplyWindow = (id) => {
+		const result = postComments.map((comment) => {
+			const replies = comment.replies.map((reply) => {
+				if (reply.id === id) {
+					return { ...reply, addAnswer: !reply.addAnswer };
+				} else {
+					return { ...reply, addAnswer: false };
+				}
+			});
+			if (comment.id === id) {
+				return { ...comment, replies, addAnswer: !comment.addAnswer };
+			} else {
+				return { ...comment, replies, addAnswer: false };
+			}
+		});
+		setData(result);
+	};
+
 	const sortComments = (postComments) => {
 		const result = postComments.sort((a, b) => b.score - a.score);
 		return result;
-	}
+	};
 
-	// const sortReplies = (postComments) => {
-	// 	const result = postComments.map((comment) => {
-	// 		const sortedReplies = comment.replies.sort((a, b) => {
-	// 			return b.score - a.score;
-	// 		});
-	// 		return { ...comment, replies: sortedReplies };
-	// 	});
-	// 	return result;
-	// };
-
-	const methods = { handleScoreChange };
+	const methods = { handleScoreChange, showReplyWindow };
 
 	const comments = postComments.map((comment) => {
-		return <Comment key={comment.id} comment={comment} methods={methods} />;
+		return (
+			<Comment
+				key={comment.id}
+				userDetails={userDetails}
+				comment={comment}
+				methods={methods}
+			/>
+		);
 	});
 
 	return <div>{comments}</div>;
