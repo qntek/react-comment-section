@@ -7,7 +7,7 @@ import ReplyAdd from './ReplyAdd';
 function Comment({ comment, methods, userDetails }) {
 
 	return (
-		<div>
+		<div className='container'>
 			<div className='comment-container'>
 				<div>
 					<ScoreCounter

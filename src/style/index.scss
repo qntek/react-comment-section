@@ -3,6 +3,26 @@
 body {
 	background-color: #f5f6fa;
 }
+.container {
+	width: 100%;
+}
+.button {
+	height: 30px;
+	width: 65px;
+	margin-left: 8px;
+	background-color: #5357b6;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 12px;
+	cursor: pointer;
+	transition: background-color 300ms;
+}
+.button:hover,
+.button:focus {
+	background-color: #c4c6ef;
+}
+
 // container
 .container-md {
 	padding-top: 30px;
@@ -23,6 +43,7 @@ body {
 	font-size: 12px;
 }
 .comment-content {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -137,15 +158,4 @@ body {
 	height: 60px;
 	max-height: 120px;
 	padding: 5px;
-}
-.reply-add-button {
-	height: 30px;
-	width: 65px;
-	margin-left: 8px;
-	background-color: #5357b6;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	font-size: 12px;
-	cursor: pointer;
 }

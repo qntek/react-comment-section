@@ -2,21 +2,22 @@ import { useState, useEffect } from 'react';
 
 import data from './data';
 import Comment from './components/Comment';
-
+import generateID from './utilities/generateID';
 function App() {
 	const [postComments, setData] = useState(data.comments);
 	const userDetails = data.currentUser;
 
-	useEffect(() => {
-		const addAnswerWindow = postComments.map((comment) => {
+	useEffect(() => closeAddSections(postComments), []);
+
+	function closeAddSections(obj) {
+		const addAnswerWindow = obj.map((comment) => {
 			const replies = comment.replies.map((reply) => {
-				if (!reply) return;
 				return { ...reply, addAnswer: false };
 			});
 			return { ...comment, replies, addAnswer: false };
 		});
 		setData(addAnswerWindow);
-	}, []);
+	}
 
 	const handleScoreChange = (id, sign) => {
 		let incrementDirection;
@@ -55,12 +56,47 @@ function App() {
 		setData(result);
 	};
 
-	const sortComments = (postComments) => {
-		const result = postComments.sort((a, b) => b.score - a.score);
-		return result;
+	const sortComments = (obj) => {
+		const result = obj?.sort((a, b) => b.score - a.score);
+		return result
 	};
 
-	const methods = { handleScoreChange, showReplyWindow };
+	const addReply = (id, text) => {
+		const newComment = {
+			id: generateID(postComments),
+			content: text,
+			createdAt: 'now',
+			score: 0,
+			replyingTo: '',
+			user: {
+				image: {
+					png: userDetails.image.png,
+					webp: userDetails.image.webp,
+				},
+				username: userDetails.username,
+			},
+		};
+
+		const result = postComments.map((comment) => {
+			if (comment.id === id) {
+				return { ...comment, replies: [...comment.replies, newComment] };
+			} else {
+				const updatedReplies = comment.replies.map((reply) => {
+					if (reply.id === id) {
+						return [reply, newComment];
+					} else {
+						return { ...reply };
+					}
+				});
+
+				return { ...comment, replies: updatedReplies.flat() };
+			}
+		});
+		closeAddSections(result);
+		
+	};
+
+	const methods = { handleScoreChange, showReplyWindow, addReply };
 
 	const comments = postComments.map((comment) => {
 		return (
@@ -75,5 +111,7 @@ function App() {
 
 	return <div>{comments}</div>;
 }
+
+
 
 export default App;

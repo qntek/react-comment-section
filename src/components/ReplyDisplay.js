@@ -11,7 +11,7 @@ function ReplyDisplay({ comment, methods, userDetails }) {
 					<div className='reply-line'></div>
 					<div></div>
 				</div>
-				<div>
+				<div className='container'>
 					<div className='comment-container'>
 						<div>
 							<ScoreCounter
@@ -20,7 +20,7 @@ function ReplyDisplay({ comment, methods, userDetails }) {
 								methods={methods}
 							/>
 						</div>
-						<div>
+						<div className='container'>
 							<CommentTopBar
 								comment={reply}
 								onClick={() => methods.showReplyWindow(reply.id)}
