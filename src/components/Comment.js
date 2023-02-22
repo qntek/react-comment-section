@@ -18,7 +18,8 @@ function Comment({ comment, methods, userDetails }) {
 					<div>
 						<CommentTopBar
 							comment={comment}
-							onClick={() => methods.showReplyWindow(comment.id)}
+							userDetails={userDetails}
+							methods={methods}
 						/>
 						<p className='comment-content-text'>
 							{comment.replyingTo ? (

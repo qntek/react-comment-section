@@ -1,15 +1,23 @@
 @import 'reset';
 
 body {
+	position: relative;
 	background-color: #f5f6fa;
 }
+.overflow-hidden {
+	overflow: hidden;
+}
+.flex {
+	display: flex;
+}
+
 .container {
 	width: 100%;
 }
 .button {
 	height: 30px;
 	width: 65px;
-	margin-left: 8px;
+	
 	background-color: #5357b6;
 	color: white;
 	border: none;
@@ -48,7 +56,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
-.comment-content-reply {
+.comment-content-reply-edit {
 	img {
 		margin-right: 8px;
 		width: 10px;
@@ -56,6 +64,10 @@ body {
 	color: #40438d;
 	font-weight: 500;
 	cursor: pointer;
+}
+.comment-content-delete {
+	margin-right: 16px;
+	color: #ed6368;
 }
 .comment-content-text {
 	margin-top: 12px;
@@ -141,15 +153,12 @@ body {
 			height: 100%;
 			border-right: 2px solid hsl(223, 19%, 93%);
 		}
-		
 	}
-	
 }
 .reply-to {
 	color: #4b50a4;
 	font-weight: 600;
-			}
-
+}
 
 // reply ADD
 
@@ -164,6 +173,7 @@ body {
 	max-width: calc(100% - 28px - 65px);
 	height: 60px;
 	max-height: 120px;
+	margin-right: 8px;
 	padding: 5px;
 	border: 1px solid gray;
 	border-radius: 8px;
@@ -172,5 +182,55 @@ body {
 }
 .reply-add-textarea:focus,
 .reply-add-textarea:active {
-	border: 1px solid #4b50a4
+	border: 1px solid #4b50a4;
+}
+
+// modal window DELETE
+
+.modal-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #00000041;
+	.modal-window {
+		padding: 18px;
+		width: 280px;
+		border-radius: 8px;
+		background-color: #ffffff;
+		.modal-header {
+			font-weight: 700;
+			margin-bottom: 16px;
+			color: #33414c;
+			font-size: 1.8rem;
+			letter-spacing: 1px;
+		}
+		.modal-text {
+			font-weight: 400;
+			color: hsl(211, 10%, 45%);
+			font-size: 1.4rem;
+			line-height: 2rem;
+			margin-bottom: 10px;
+		}
+		.modal-buttons {
+			display: flex;
+			justify-content: space-between;
+			align-content: center;
+			button {
+				width: 45%;
+				height: 35px;
+				
+			}
+			.modal-cancel {
+				background-color: #67717e;
+			}
+			.modal-confirm {
+				background-color: #ec6369;
+			}
+		}
+	}
 }

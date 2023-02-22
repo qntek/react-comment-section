@@ -1,13 +1,47 @@
-import replyIcon from '../images/icon-reply.svg';
+import { useState } from 'react';
+import ManageButton from './ManageButton';
 import CommentDetails from './CommentDetails';
-function CommentTopBar({ comment, onClick }) {
+import Modal from './Modal';
+
+function CommentTopBar({ comment, methods, userDetails }) {
+	const [modalVisible, setModalVisibility] = useState(false);
+
+	const hideModal = () => {
+		setModalVisibility(false);
+	};
+
+	const replyButton = (
+		<ManageButton
+			type='reply'
+			onClick={() => methods.showReplyWindow(comment.id)}
+		/>
+	);
+
+	const manageButtons = (
+		<div className='flex'>
+			<ManageButton type='delete' onClick={() => setModalVisibility(true)} />
+			<ManageButton
+				type='edit'
+				onClick={() => console.log('TO BE IMPLEMENTED')}
+			/>
+		</div>
+	);
+	let displayedButtons;
+
+	userDetails.username === comment.user.username
+		? (displayedButtons = manageButtons)
+		: (displayedButtons = replyButton);
+
 	return (
 		<div className='comment-content'>
+			{modalVisible ? (
+				<Modal
+					onCancel={hideModal}
+					onConfirm={() => methods.delComment(comment.id)}
+				/>
+			) : null}
 			<CommentDetails comment={comment} />
-			<div className='comment-content-reply' onClick={onClick}>
-				<img src={replyIcon} alt='' />
-				Reply
-			</div>
+			{displayedButtons}
 		</div>
 	);
 }

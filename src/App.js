@@ -3,11 +3,14 @@ import { useState, useEffect } from 'react';
 import data from './data';
 import Comment from './components/Comment';
 import generateID from './utilities/generateID';
+import Modal from './components/Modal';
+
 function App() {
 	const [postComments, setData] = useState(data.comments);
 	const userDetails = data.currentUser;
 
-	useEffect(() => closeAddSections(postComments), []);
+	useEffect(() => {closeAddSections(postComments);
+	}, []);
 
 	function closeAddSections(obj) {
 		const addAnswerWindow = obj.map((comment) => {
@@ -107,7 +110,17 @@ function App() {
 		closeAddSections(result);
 	};
 
-	const methods = { handleScoreChange, showReplyWindow, addReply };
+	const delComment = (id) => {
+		const result = postComments.map((comment) => {
+			const replies = comment.replies.filter((reply) => reply.id !== id);
+
+			return { ...comment, replies };
+		});
+
+		setData(result.filter((comment) => comment.id !== id));
+	};
+
+	const methods = { handleScoreChange, showReplyWindow, addReply, delComment };
 
 	const comments = postComments.map((comment) => {
 		return (
@@ -120,7 +133,8 @@ function App() {
 		);
 	});
 
-	return <div>{comments}</div>;
+	return <div>{comments}
+	</div>;
 }
 
 export default App;

@@ -23,7 +23,8 @@ function ReplyDisplay({ comment, methods, userDetails }) {
 						<div className='container'>
 							<CommentTopBar
 								comment={reply}
-								onClick={() => methods.showReplyWindow(reply.id)}
+								userDetails={userDetails}
+								methods={methods}
 							/>
 							<p className='comment-content-text'>{reply.replyingTo ? <span className='reply-to'>@{reply.replyingTo} </span> : null}{reply.content}</p>
 						</div>
