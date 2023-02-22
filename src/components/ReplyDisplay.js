@@ -25,7 +25,7 @@ function ReplyDisplay({ comment, methods, userDetails }) {
 								comment={reply}
 								onClick={() => methods.showReplyWindow(reply.id)}
 							/>
-							<p className='comment-content-text'>{reply.content}</p>
+							<p className='comment-content-text'>{reply.replyingTo ? <span className='reply-to'>@{reply.replyingTo} </span> : null}{reply.content}</p>
 						</div>
 					</div>
 					{reply.addAnswer ? (

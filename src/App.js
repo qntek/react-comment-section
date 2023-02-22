@@ -58,16 +58,20 @@ function App() {
 
 	const sortComments = (obj) => {
 		const result = obj?.sort((a, b) => b.score - a.score);
-		return result
+		return result;
 	};
 
 	const addReply = (id, text) => {
+		if (text === '') {
+			closeAddSections(postComments);
+			return;
+		}
+
 		const newComment = {
 			id: generateID(postComments),
 			content: text,
 			createdAt: 'now',
 			score: 0,
-			replyingTo: '',
 			user: {
 				image: {
 					png: userDetails.image.png,
@@ -76,24 +80,31 @@ function App() {
 				username: userDetails.username,
 			},
 		};
+		let result;
+		if (id === 'new') {
+			newComment.replies = [];
+			result = { ...postComments, ...newComment };
+		} else {
+			result = postComments.map((comment) => {
+				if (comment.id === id) {
+					newComment.replyingTo = comment.user.username;
+					return { ...comment, replies: [...comment.replies, newComment] };
+				} else {
+					const updatedReplies = comment.replies.map((reply) => {
+						if (reply.id === id) {
+							newComment.replyingTo = reply.user.username;
+							return [reply, newComment];
+						} else {
+							return { ...reply };
+						}
+					});
 
-		const result = postComments.map((comment) => {
-			if (comment.id === id) {
-				return { ...comment, replies: [...comment.replies, newComment] };
-			} else {
-				const updatedReplies = comment.replies.map((reply) => {
-					if (reply.id === id) {
-						return [reply, newComment];
-					} else {
-						return { ...reply };
-					}
-				});
+					return { ...comment, replies: updatedReplies.flat() };
+				}
+			});
+		}
 
-				return { ...comment, replies: updatedReplies.flat() };
-			}
-		});
 		closeAddSections(result);
-		
 	};
 
 	const methods = { handleScoreChange, showReplyWindow, addReply };
@@ -111,7 +122,5 @@ function App() {
 
 	return <div>{comments}</div>;
 }
-
-
 
 export default App;

@@ -141,8 +141,15 @@ body {
 			height: 100%;
 			border-right: 2px solid hsl(223, 19%, 93%);
 		}
+		
 	}
+	
 }
+.reply-to {
+	color: #4b50a4;
+	font-weight: 600;
+			}
+
 
 // reply ADD
 
@@ -158,4 +165,12 @@ body {
 	height: 60px;
 	max-height: 120px;
 	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 8px;
+	outline: none;
+	transition: border 200ms;
+}
+.reply-add-textarea:focus,
+.reply-add-textarea:active {
+	border: 1px solid #4b50a4
 }

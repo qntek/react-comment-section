@@ -13,7 +13,7 @@ function ReplyAdd({ id, methods, userDetails }) {
 	return (
 		<div className='comment-container'>
 			<img className={'reply-add-img'} src={image} alt={userDetails.username} />
-			<textarea value={text} ref={reference} className={'reply-add-textarea'} onChange={handleChange}/>
+			<textarea value={text} ref={reference} className={'reply-add-textarea'} onInput={handleChange}/>
 			<Button onClick={() => methods.addReply(id, text)} >REPLY</Button>
 		</div>
 	);
