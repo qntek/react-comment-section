@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import data from './data';
 import Comment from './components/Comment';
 import generateID from './utilities/generateID';
-import Modal from './components/Modal';
+import ReplyAdd from './components/ReplyAdd';
 
 function App() {
 	const [postComments, setData] = useState(data.comments);
 	const userDetails = data.currentUser;
 
-	useEffect(() => {closeAddSections(postComments);
+	useEffect(() => {
+		closeAddSections(postComments);
 	}, []);
 
 	function closeAddSections(obj) {
@@ -86,7 +87,7 @@ function App() {
 		let result;
 		if (id === 'new') {
 			newComment.replies = [];
-			result = { ...postComments, ...newComment };
+			result =  [...postComments, newComment] ;
 		} else {
 			result = postComments.map((comment) => {
 				if (comment.id === id) {
@@ -106,7 +107,6 @@ function App() {
 				}
 			});
 		}
-
 		closeAddSections(result);
 	};
 
@@ -133,8 +133,12 @@ function App() {
 		);
 	});
 
-	return <div>{comments}
-	</div>;
+	return (
+		<div className='container'>
+			{comments}
+			<ReplyAdd id={'new'} methods={methods} userDetails={userDetails} />
+		</div>
+	);
 }
 
 export default App;

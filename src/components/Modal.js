@@ -4,16 +4,15 @@ import Button from './Button';
 
 function Modal({ onCancel, onConfirm }) {
 	const element = document.querySelector('body');
-
 	useEffect(() => {
 		element.classList.add('overflow-hidden');
-		return element.classList.remove('overflow-hidden');
+		return () => element.classList.remove('overflow-hidden');
 	}, []);
 
 	useEffect(() => {
 		const modalBackdrop = document.querySelector('.modal-container');
 		modalBackdrop.addEventListener('click', onCancel);
-		return modalBackdrop.removeEventListener('click', onCancel);
+		return () => modalBackdrop.removeEventListener('click', onCancel);
 	}, []);
 
 	const modalWindow = (

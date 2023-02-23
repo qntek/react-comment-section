@@ -14,8 +14,8 @@ function Comment({ comment, methods, userDetails }) {
 						methods={methods}
 					/>
 				</div>
-				<div>
-					<div>
+				<div className='container'>
+					<div className='container'>
 						<CommentTopBar
 							comment={comment}
 							userDetails={userDetails}

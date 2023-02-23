@@ -7,14 +7,28 @@ function ReplyAdd({ id, methods, userDetails }) {
 	const reference = useRef();
 
 	const handleChange = () => {
-		setText(reference.current.value)
-	}
+		setText(reference.current.value);
+	};
+
+	let buttonToRender;
+	id === 'new'
+		? (buttonToRender = (
+				<Button onClick={() => {methods.addReply('new', text); setText('')}}>SEND</Button>
+		  ))
+		: (buttonToRender = (
+				<Button onClick={() => methods.addReply(id, text)}>REPLY</Button>
+		  ));
 
 	return (
 		<div className='comment-container'>
 			<img className={'reply-add-img'} src={image} alt={userDetails.username} />
-			<textarea value={text} ref={reference} className={'reply-add-textarea'} onInput={handleChange}/>
-			<Button onClick={() => methods.addReply(id, text)} >REPLY</Button>
+			<textarea
+				value={text}
+				ref={reference}
+				className={'reply-add-textarea'}
+				onInput={handleChange}
+			/>
+			{buttonToRender}
 		</div>
 	);
 }
