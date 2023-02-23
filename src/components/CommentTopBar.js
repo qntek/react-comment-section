@@ -6,7 +6,9 @@ import Modal from './Modal';
 function CommentTopBar({ comment, methods, userDetails }) {
 	const [modalVisible, setModalVisibility] = useState(false);
 
-	const hideModal = () => {
+	const hideModal = (e) => {
+		e.stopPropagation();
+		
 		setModalVisibility(false);
 	};
 
