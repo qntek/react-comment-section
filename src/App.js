@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 
 import data from './data';
 import Comment from './components/Comment';
@@ -14,11 +14,13 @@ function App() {
 	}, []);
 
 	function closeAddSections(obj) {
+		//addAnswer determines if reply window under current comment is opened
+		//editOpen as above, related to edit post if post author is currentUser.username
 		const addAnswerWindow = obj.map((comment) => {
 			const replies = comment.replies.map((reply) => {
-				return { ...reply, addAnswer: false };
+				return { ...reply, addAnswer: false, editOpen: false };
 			});
-			return { ...comment, replies, addAnswer: false };
+			return { ...comment, replies, addAnswer: false, editOpen: false };
 		});
 		setData(addAnswerWindow);
 	}
@@ -42,19 +44,31 @@ function App() {
 		setData(sortComments(result));
 	};
 
-	const showReplyWindow = (id) => {
+	const showReplyWindow = (id, value = 'addAnswer') => {
+		// value may be 'addAnswer' to reply or 'editOpen' to edit. Determines if reply or edit window is opened
+
+		if (value !== 'aadAnswer' && value !== 'editOpen') value = 'addAnswer';
+		let secondValue; // is used to keep only one window open at a time.
+		value === 'addAnswer'
+			? (secondValue = 'editOpen')
+			: (secondValue = 'addAnswer');
 		const result = postComments.map((comment) => {
 			const replies = comment.replies.map((reply) => {
 				if (reply.id === id) {
-					return { ...reply, addAnswer: !reply.addAnswer };
+					return { ...reply, [value]: !reply[value], [secondValue]: false };
 				} else {
-					return { ...reply, addAnswer: false };
+					return { ...reply, [value]: false, [secondValue]: false };
 				}
 			});
 			if (comment.id === id) {
-				return { ...comment, replies, addAnswer: !comment.addAnswer };
+				return {
+					...comment,
+					replies,
+					[value]: !comment[value],
+					[secondValue]: false,
+				};
 			} else {
-				return { ...comment, replies, addAnswer: false };
+				return { ...comment, replies, [value]: false, [secondValue]: false };
 			}
 		});
 		setData(result);
@@ -87,7 +101,7 @@ function App() {
 		let result;
 		if (id === 'new') {
 			newComment.replies = [];
-			result =  [...postComments, newComment] ;
+			result = [...postComments, newComment];
 		} else {
 			result = postComments.map((comment) => {
 				if (comment.id === id) {
@@ -120,7 +134,17 @@ function App() {
 		setData(result.filter((comment) => comment.id !== id));
 	};
 
-	const methods = { handleScoreChange, showReplyWindow, addReply, delComment };
+	const editComment = (id) => {
+		console.log('melduje obecność' + id);
+	};
+
+	const methods = {
+		handleScoreChange,
+		showReplyWindow,
+		addReply,
+		delComment,
+		editComment,
+	};
 
 	const comments = postComments.map((comment) => {
 		return (

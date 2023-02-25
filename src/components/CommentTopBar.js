@@ -8,8 +8,11 @@ function CommentTopBar({ comment, methods, userDetails }) {
 
 	const hideModal = (e) => {
 		e.stopPropagation();
-		
 		setModalVisibility(false);
+	};
+
+	const handleEdit = () => {
+		methods.showReplyWindow(comment.id, 'editOpen')
 	};
 
 	const replyButton = (
@@ -24,7 +27,7 @@ function CommentTopBar({ comment, methods, userDetails }) {
 			<ManageButton type='delete' onClick={() => setModalVisibility(true)} />
 			<ManageButton
 				type='edit'
-				onClick={() => console.log('TO BE IMPLEMENTED')}
+				onClick={() => handleEdit()}
 			/>
 		</div>
 	);

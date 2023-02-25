@@ -2,8 +2,18 @@ import ScoreCounter from './ScoreCounter';
 import CommentTopBar from './CommentTopBar';
 import ReplyDisplay from './ReplyDisplay';
 import ReplyAdd from './ReplyAdd';
+import EditComment from './EditComment';
 
 function Comment({ comment, methods, userDetails }) {
+	const textContent = (
+		<p className='comment-content-text'>
+			{comment.replyingTo ? (
+				<span className='reply-to'>@{comment.replyingTo} </span>
+			) : null}{' '}
+			{comment.content}
+		</p>
+	);
+
 	return (
 		<div className='container'>
 			<div className='comment-container'>
@@ -21,12 +31,7 @@ function Comment({ comment, methods, userDetails }) {
 							userDetails={userDetails}
 							methods={methods}
 						/>
-						<p className='comment-content-text'>
-							{comment.replyingTo ? (
-								<span className='reply-to'>@{comment.replyingTo} </span>
-							) : null}{' '}
-							{comment.content}
-						</p>
+					 {comment.editOpen ? <EditComment comment={comment} methods={methods}/> : textContent}
 					</div>
 				</div>
 			</div>
