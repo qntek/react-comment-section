@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import data from '../data';
-import generateID from '..n/utilities/generateID';
+import generateID from '../utilities/generateID';
 
 const commentSection = createContext();
 
