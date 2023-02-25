@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import Button from './Button';
 
-function ReplyAdd({ id, methods, userDetails }) {
+function ReplyAdd({ id, methods, userDetails, onFocus }) {
 	const [text, setText] = useState('');
 	const image = require(`../${userDetails.image.png.slice(2)}`);
 	const reference = useRef();
@@ -27,6 +27,7 @@ function ReplyAdd({ id, methods, userDetails }) {
 				ref={reference}
 				className={'reply-add-textarea'}
 				onInput={handleChange}
+				onFocus={onFocus}
 			/>
 			{buttonToRender}
 		</div>

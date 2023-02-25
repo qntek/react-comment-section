@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 
 import data from './data';
 import Comment from './components/Comment';
@@ -7,13 +7,14 @@ import ReplyAdd from './components/ReplyAdd';
 
 function App() {
 	const [postComments, setData] = useState(data.comments);
-	const userDetails = data.currentUser;
 
 	useEffect(() => {
-		closeAddSections(postComments);
+		closeOpenedSections(postComments);
 	}, []);
 
-	function closeAddSections(obj) {
+	const userDetails = data.currentUser;
+
+	function closeOpenedSections(obj) {
 		//addAnswer determines if reply window under current comment is opened
 		//editOpen as above, related to edit post if post author is currentUser.username
 		const addAnswerWindow = obj.map((comment) => {
@@ -81,7 +82,7 @@ function App() {
 
 	const addReply = (id, text) => {
 		if (text === '') {
-			closeAddSections(postComments);
+			closeOpenedSections(postComments);
 			return;
 		}
 
@@ -121,7 +122,7 @@ function App() {
 				}
 			});
 		}
-		closeAddSections(result);
+		closeOpenedSections(result);
 	};
 
 	const delComment = (id) => {
@@ -134,8 +135,22 @@ function App() {
 		setData(result.filter((comment) => comment.id !== id));
 	};
 
-	const editComment = (id) => {
-		console.log('melduje obecność' + id);
+	const editComment = (id, text) => {
+		const result = postComments.map((comment) => {
+			if (comment.id === id) {
+				return { ...comment, content: text, editOpen: false };
+			} else {
+				const updatedReplies = comment.replies.map((reply) => {
+					if (reply.id === id) {
+						return { ...reply, content: text, editOpen: false };
+					} else {
+						return { ...reply };
+					}
+				});
+				return { ...comment, replies: updatedReplies };
+			}
+		});
+		setData(result);
 	};
 
 	const methods = {
@@ -160,7 +175,12 @@ function App() {
 	return (
 		<div className='container'>
 			{comments}
-			<ReplyAdd id={'new'} methods={methods} userDetails={userDetails} />
+			<ReplyAdd
+				id={'new'}
+				methods={methods}
+				userDetails={userDetails}
+				onFocus={() => closeOpenedSections(postComments)}
+			/>
 		</div>
 	);
 }

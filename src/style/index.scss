@@ -171,10 +171,8 @@ body {
 }
 .reply-add-textarea {
 	width: calc(100% - 28px - 65px);
-	min-width: calc(100% - 28px - 65px);
-	max-width: calc(100% - 28px - 65px);
-	height: 60px;
-	max-height: 120px;
+	min-height: 60px;
+	resize: none;
 	margin-right: 8px;
 	padding: 5px;
 	border: 1px solid gray;
@@ -187,6 +185,16 @@ body {
 	border: 1px solid #4b50a4;
 }
 
+// edit comment window
+
+.edit-comment-container {
+	display: flex;
+	flex-direction: column;
+}
+.edit-comment-textarea {
+	width: 100%;
+	margin: 10px 0;
+}
 // modal window DELETE
 
 .modal-container {

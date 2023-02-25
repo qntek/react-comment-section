@@ -3,7 +3,7 @@ import Button from './Button';
 import ScoreCounter from './ScoreCounter';
 
 function EditComment({ comment, methods}) {
-	const [text, setText] = useState('');
+	const [text, setText] = useState(comment.content);
 	const reference = useRef();
 
 	const handleChange = () => {
@@ -12,11 +12,11 @@ function EditComment({ comment, methods}) {
 
 	return (
 		<div className='container'>
-			<div className='flex'>
+			<div className='edit-comment-container'>
 				<textarea
 					value={text}
 					ref={reference}
-					className={'reply-add-textarea'}
+					className={'reply-add-textarea edit-comment-textarea'}
 					onInput={handleChange}
 				/>
 				<Button
