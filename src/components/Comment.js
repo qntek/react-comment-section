@@ -1,10 +1,14 @@
+import { useContext } from 'react';
+import commentSection from '../context/comments';
 import ScoreCounter from './ScoreCounter';
 import CommentTopBar from './CommentTopBar';
 import ReplyDisplay from './ReplyDisplay';
 import ReplyAdd from './ReplyAdd';
 import EditComment from './EditComment';
 
-function Comment({ comment, methods, userDetails }) {
+function Comment({ comment }) {
+	const {closeOpenedSections, postComments} = useContext(commentSection);
+	
 	const textContent = (
 		<p className='comment-content-text'>
 			{comment.replyingTo ? (
@@ -18,32 +22,17 @@ function Comment({ comment, methods, userDetails }) {
 		<div className='container'>
 			<div className='comment-container'>
 				<div>
-					<ScoreCounter
-						id={comment.id}
-						score={comment.score}
-						methods={methods}
-					/>
+					<ScoreCounter id={comment.id} score={comment.score} />
 				</div>
 				<div className='container'>
 					<div className='container'>
-						<CommentTopBar
-							comment={comment}
-							userDetails={userDetails}
-							methods={methods}
-						/>
-					 {comment.editOpen ? <EditComment comment={comment} methods={methods}/> : textContent}
+						<CommentTopBar comment={comment} />
+						{comment.editOpen ? <EditComment comment={comment} /> : textContent}
 					</div>
 				</div>
 			</div>
-
-			{comment.addAnswer ? (
-				<ReplyAdd userDetails={userDetails} id={comment.id} methods={methods} />
-			) : null}
-			<ReplyDisplay
-				comment={comment}
-				userDetails={userDetails}
-				methods={methods}
-			/>
+			{comment.addAnswer ? <ReplyAdd id={comment.id} /> : null}
+			<ReplyDisplay comment={comment} onFocus={() => closeOpenedSections(postComments)}/>
 		</div>
 	);
 }

@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import commentSection from '../context/comments';
 import Button from './Button';
-import ScoreCounter from './ScoreCounter';
 
-function EditComment({ comment, methods}) {
+function EditComment({ comment }) {
+	const { editComment  } = useContext(commentSection);
 	const [text, setText] = useState(comment.content);
 	const reference = useRef();
 
@@ -21,7 +22,7 @@ function EditComment({ comment, methods}) {
 				/>
 				<Button
 					className={'margin-left'}
-					onClick={() => methods.editComment(comment.id, text)}>
+					onClick={() => editComment(comment.id, text)}>
 					UPDATE
 				</Button>
 			</div>

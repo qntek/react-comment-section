@@ -1,24 +1,27 @@
 import { useMediaQuery } from 'react-responsive';
+import { useContext } from 'react';
 import plusIcon from '../images/icon-plus.svg';
 import minusIcon from '../images/icon-minus.svg';
+import commentSection from '../context/comments';
 
-function ScoreCounter({ id, score, methods }) {
+function ScoreCounter({ id, score }) {
+	const { handleScoreChange } = useContext(commentSection);
 	let orientationClass;
 	useMediaQuery({ query: '(min-width: 576px)' })
 		? (orientationClass = 'score_counter-container-vertical')
 		: (orientationClass = 'score_counter-container-horizontal');
 
-	const handleScoreChange = (id, sign) => {
+	const handleChange = (id, sign) => {
 		if (score === 0 && sign === '-') return;
 		else if (score === 999 && sign === '+') return;
-		else methods.handleScoreChange(id, sign);
+		else handleScoreChange(id, sign);
 	};
 
 	return (
 		<div className={`score_counter-container ${orientationClass}`}>
 			<button
 				onClick={() => {
-					handleScoreChange(id, '+');
+					handleChange(id, '+');
 				}}
 				className='score_counter-button'>
 				<img className='score_counter-img' src={plusIcon} alt='' />
@@ -26,7 +29,7 @@ function ScoreCounter({ id, score, methods }) {
 			<span className='score_counter-score'>{score}</span>
 			<button
 				onClick={() => {
-					handleScoreChange(id, '-');
+					handleChange(id, '-');
 				}}
 				className='score_counter-button'>
 				<img className='score_counter-img' src={minusIcon} alt='' />

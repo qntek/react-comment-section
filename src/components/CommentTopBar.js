@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import commentSection from '../context/comments'
 import ManageButton from './ManageButton';
 import CommentDetails from './CommentDetails';
 import Modal from './Modal';
 
-function CommentTopBar({ comment, methods, userDetails }) {
+function CommentTopBar({ comment}) {
+	const {showReplyWindow, userDetails, delComment} = useContext(commentSection);
 	const [modalVisible, setModalVisibility] = useState(false);
 
 	const hideModal = (e) => {
@@ -12,13 +14,13 @@ function CommentTopBar({ comment, methods, userDetails }) {
 	};
 
 	const handleEdit = () => {
-		methods.showReplyWindow(comment.id, 'editOpen')
+		showReplyWindow(comment.id, 'editOpen')
 	};
 
 	const replyButton = (
 		<ManageButton
 			type='reply'
-			onClick={() => methods.showReplyWindow(comment.id)}
+			onClick={() => showReplyWindow(comment.id)}
 		/>
 	);
 
@@ -42,7 +44,7 @@ function CommentTopBar({ comment, methods, userDetails }) {
 			{modalVisible ? (
 				<Modal
 					onCancel={hideModal}
-					onConfirm={() => methods.delComment(comment.id)}
+					onConfirm={() => delComment(comment.id)}
 				/>
 			) : null}
 			<CommentDetails comment={comment} />

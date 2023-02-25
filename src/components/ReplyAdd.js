@@ -1,7 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import commentSection from '../context/comments';
 import Button from './Button';
 
-function ReplyAdd({ id, methods, userDetails, onFocus }) {
+function ReplyAdd({ id, onFocus }) {
+	const { userDetails, addReply} = useContext(commentSection);
 	const [text, setText] = useState('');
 	const image = require(`../${userDetails.image.png.slice(2)}`);
 	const reference = useRef();
@@ -13,10 +15,10 @@ function ReplyAdd({ id, methods, userDetails, onFocus }) {
 	let buttonToRender;
 	id === 'new'
 		? (buttonToRender = (
-				<Button onClick={() => {methods.addReply('new', text); setText('')}}>SEND</Button>
+				<Button onClick={() => {addReply('new', text); setText('')}}>SEND</Button>
 		  ))
 		: (buttonToRender = (
-				<Button onClick={() => methods.addReply(id, text)}>REPLY</Button>
+				<Button onClick={() => addReply(id, text)}>REPLY</Button>
 		  ));
 
 	return (

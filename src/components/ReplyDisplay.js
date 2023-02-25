@@ -3,9 +3,8 @@ import CommentTopBar from './CommentTopBar';
 import ReplyAdd from './ReplyAdd';
 import EditComment from './EditComment';
 
-function ReplyDisplay({ comment, methods, userDetails }) {
+function ReplyDisplay({ comment }) {
 	const replies = [...comment.replies].map((reply) => {
-		
 		const textContent = (
 			<p className='comment-content-text'>
 				{reply.replyingTo ? (
@@ -24,28 +23,14 @@ function ReplyDisplay({ comment, methods, userDetails }) {
 				<div className='container'>
 					<div className='comment-container'>
 						<div>
-							<ScoreCounter
-								id={reply.id}
-								score={reply.score}
-								methods={methods}
-							/>
+							<ScoreCounter id={reply.id} score={reply.score} />
 						</div>
 						<div className='container'>
-							<CommentTopBar
-								comment={reply}
-								userDetails={userDetails}
-								methods={methods}
-							/>
-							 {reply.editOpen ? <EditComment comment={reply} methods={methods}/> : textContent}
+							<CommentTopBar comment={reply} />
+							{reply.editOpen ? <EditComment comment={reply} /> : textContent}
 						</div>
 					</div>
-					{reply.addAnswer ? (
-						<ReplyAdd
-							userDetails={userDetails}
-							id={reply.id}
-							methods={methods}
-						/>
-					) : null}
+					{reply.addAnswer ? <ReplyAdd id={reply.id} /> : null}
 				</div>
 			</div>
 		);
