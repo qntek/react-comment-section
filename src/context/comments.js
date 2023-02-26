@@ -2,10 +2,14 @@ import { useState, useEffect, createContext } from 'react';
 import data from '../data';
 import generateID from '../utilities/generateID';
 
+import {
+	loadLocalStoredComments,
+	saveToLocal,
+} from '../utilities/localStorage';
 const commentSection = createContext();
 
 function Provider({ children }) {
-	const [postComments, setData] = useState(data.comments);
+	const [postComments, setData] = useState(loadLocalStoredComments().comments);
 
 	useEffect(() => {
 		closeOpenedSections(postComments);
@@ -23,6 +27,7 @@ function Provider({ children }) {
 			return { ...comment, replies, addAnswer: false, editOpen: false };
 		});
 		setData(addAnswerWindow);
+		saveToLocal(addAnswerWindow);
 	}
 
 	const handleScoreChange = (id, sign) => {
@@ -41,7 +46,9 @@ function Provider({ children }) {
 				return { ...comment, replies: updatedReplies };
 			} else return comment;
 		});
-		setData(sortComments(result));
+		const sortedData = sortComments(result)
+		setData(sortedData);
+		saveToLocal(sortedData)
 	};
 
 	const showReplyWindow = (id, value = 'addAnswer') => {
@@ -72,6 +79,7 @@ function Provider({ children }) {
 			}
 		});
 		setData(result);
+		saveToLocal(result)
 	};
 
 	const sortComments = (obj) => {
@@ -122,6 +130,7 @@ function Provider({ children }) {
 			});
 		}
 		closeOpenedSections(result);
+		saveToLocal(result);
 	};
 
 	const delComment = (id) => {
@@ -130,8 +139,9 @@ function Provider({ children }) {
 
 			return { ...comment, replies };
 		});
-
-		setData(result.filter((comment) => comment.id !== id));
+		const filteredResult = result.filter((comment) => comment.id !== id)
+		setData(filteredResult);
+		saveToLocal(filteredResult)
 	};
 
 	const editComment = (id, text) => {
@@ -150,6 +160,7 @@ function Provider({ children }) {
 			}
 		});
 		setData(result);
+		saveToLocal(result)
 	};
 
 	const valueToShare = {
