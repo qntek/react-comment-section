@@ -88,7 +88,7 @@ function Provider({ children }) {
 		const newComment = {
 			id: generateID(postComments),
 			content: text,
-			createdAt: 'now',
+			createdAt: Date.now(),
 			score: 0,
 			user: {
 				image: {
