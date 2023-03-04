@@ -24,7 +24,7 @@ function ReplyAdd({ id, onFocus }) {
 				</Button>
 		  ))
 		: (buttonToRender = (
-				<Button onClick={() => addReply(id, text)}>REPLY</Button>
+				<Button onClick={() => addReply(id, text)} aria-label={'Reply'}>REPLY</Button>
 		  ));
 
 	let content;

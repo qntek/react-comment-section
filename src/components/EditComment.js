@@ -22,7 +22,8 @@ function EditComment({ comment }) {
 				/>
 				<Button
 					className={'margin-left'}
-					onClick={() => editComment(comment.id, text)}>
+					onClick={() => editComment(comment.id, text)}
+					aria-label={'Update'}>
 					UPDATE
 				</Button>
 			</div>

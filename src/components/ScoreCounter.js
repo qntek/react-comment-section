@@ -22,11 +22,13 @@ function ScoreCounter({ id, score }) {
 				onClick={() => {
 					handleChange(id, '+');
 				}}
-				className='score_counter-button'>
+				className='score_counter-button'
+				aria-label={'Vote'}>
 				<img className='score_counter-img' src={plusIcon} alt='' />
 			</button>
 			<span className='score_counter-score'>{score}</span>
 			<button
+				aria-label={'Downvote'}
 				onClick={() => {
 					handleChange(id, '-');
 				}}

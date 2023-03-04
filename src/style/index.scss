@@ -143,9 +143,9 @@ body {
 .score_counter-img {
 	width: 8px;
 	transition: 300 all;
-	color: red;
 }
 .score_counter-img:hover {
+	fill: #4a479e;
 	color: #4a479e;
 }
 .score_counter-score {
