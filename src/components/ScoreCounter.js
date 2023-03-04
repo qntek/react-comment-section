@@ -1,14 +1,13 @@
-import { useMediaQuery } from 'react-responsive';
+
 import { useContext } from 'react';
 import plusIcon from '../images/icon-plus.svg';
 import minusIcon from '../images/icon-minus.svg';
 import commentSection from '../context/comments';
 
 function ScoreCounter({ id, score }) {
-	const { handleScoreChange } = useContext(commentSection);
+	const { handleScoreChange, mode } = useContext(commentSection);
 	let orientationClass;
-	useMediaQuery({ query: '(min-width: 576px)' })
-		? (orientationClass = 'score_counter-container-vertical')
+	mode === 'desktop' ? (orientationClass = 'score_counter-container-vertical')
 		: (orientationClass = 'score_counter-container-horizontal');
 
 	const handleChange = (id, sign) => {

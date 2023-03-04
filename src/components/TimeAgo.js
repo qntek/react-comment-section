@@ -4,6 +4,7 @@ import React from 'react'
 import ReactTimeAgo from 'react-time-ago'
 
 TimeAgo.addDefaultLocale(en)
+
 function CreationTime({ date }) {
   return <ReactTimeAgo date={date} locale="en-US" />
   

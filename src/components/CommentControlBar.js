@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react';
-import commentSection from '../context/comments'
+import commentSection from '../context/comments';
 import ManageButton from './ManageButton';
 import CommentDetails from './CommentDetails';
 import Modal from './Modal';
 
-function CommentTopBar({ comment}) {
-	const {showReplyWindow, userDetails, delComment} = useContext(commentSection);
+function CommentControlBar({ comment }) {
+	const { showReplyWindow, userDetails, delComment, mode } =
+		useContext(commentSection);
 	const [modalVisible, setModalVisibility] = useState(false);
 
 	const hideModal = (e) => {
@@ -14,42 +15,38 @@ function CommentTopBar({ comment}) {
 	};
 
 	const handleEdit = () => {
-		showReplyWindow(comment.id, 'editOpen')
+		showReplyWindow(comment.id, 'editOpen');
 	};
 
 	const replyButton = (
-		<ManageButton
-			type='reply'
-			onClick={() => showReplyWindow(comment.id)}
-		/>
+		<ManageButton type='reply' onClick={() => showReplyWindow(comment.id)} />
 	);
 
 	const manageButtons = (
 		<div className='flex'>
 			<ManageButton type='delete' onClick={() => setModalVisibility(true)} />
-			<ManageButton
-				type='edit'
-				onClick={() => handleEdit()}
-			/>
+			<ManageButton type='edit' onClick={() => handleEdit()} />
 		</div>
 	);
+
 	let displayedButtons;
+	let desktopView;
+
+	mode === 'desktop'
+		? (desktopView = <CommentDetails comment={comment} />)
+		: (desktopView = null);
 
 	userDetails.username === comment.user.username
 		? (displayedButtons = manageButtons)
 		: (displayedButtons = replyButton);
-
 	return (
-		<div className='comment-content'>
+		<div className={mode === 'desktop' ? 'comment-content' : ''}>
 			{modalVisible ? (
-				<Modal
-					onCancel={hideModal}
-					onConfirm={() => delComment(comment.id)}
-				/>
+				<Modal onCancel={hideModal} onConfirm={() => delComment(comment.id)} />
 			) : null}
-			<CommentDetails comment={comment} />
+			{desktopView}
 			{displayedButtons}
 		</div>
 	);
 }
-export default CommentTopBar;
+export default CommentControlBar;

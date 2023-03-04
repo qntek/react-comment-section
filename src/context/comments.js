@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import data from '../data';
 import generateID from '../utilities/generateID';
 
@@ -17,6 +18,8 @@ function Provider({ children }) {
 
 	const userDetails = data.currentUser;
 
+	let mode
+	useMediaQuery({ query: '(min-width: 576px)' }) === true ? mode = 'desktop' : mode = 'mobile';
 	function closeOpenedSections(obj) {
 		//addAnswer determines if reply window under current comment is opened
 		//editOpen as above, related to edit post if post author is currentUser.username
@@ -171,6 +174,7 @@ function Provider({ children }) {
 		addReply,
 		delComment,
 		editComment,
+		mode
 	};
 
 	return (

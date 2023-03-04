@@ -1,8 +1,14 @@
-import TimeAgo from 'javascript-time-ago';
+import { useContext } from 'react';
+import commentSection from '../context/comments';
 import CreationTime from './TimeAgo';
 
 function CommentDetails({ comment }) {
+	const { userDetails } = useContext(commentSection);
 	const image = require(`../${comment.user.image.png.slice(2)}`);
+
+	let markCurrentUserComment
+	userDetails.username === comment.user.username ? markCurrentUserComment = <span className='mark-current-user'>you</span> : markCurrentUserComment = null;
+	
 	return (
 		<div className='comment-detail-container'>
 			<img
@@ -12,6 +18,7 @@ function CommentDetails({ comment }) {
 			/>
 			<p className='comment-detail-name'>
 				{comment.user.username}{' '}
+				{markCurrentUserComment}
 				<span className='comment-detail-time'>
 					<CreationTime date={comment.createdAt} />
 				</span>
